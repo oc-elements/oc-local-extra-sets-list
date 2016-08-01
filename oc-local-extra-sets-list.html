@@ -1,0 +1,39 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<link rel="import" href="../oc-local-product-extras-api/oc-local-product-extras-api.html">
+<link rel="import" href="../oc-extra-sets-list/oc-extra-sets-list.html">
+<!--
+`oc-local-extra-sets-list`
+Element displaying a list of local extra sets
+
+@demo demo/index.html 
+-->
+
+<dom-module id="oc-local-extra-sets-list">
+
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+
+  <template>
+    <oc-local-product-extras-api id="extrasApi" ></oc-local-product-extras-api>
+    <oc-extra-sets-list></oc-extra-sets-list>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'oc-local-extra-sets-list',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'oc-local-extra-sets-list',
+        },
+      },
+
+    });
+  </script>
+</dom-module>

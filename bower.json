@@ -1,0 +1,16 @@
+{
+  "name": "oc-local-extra-sets-list",
+  "description": "Element displaying a list of local extra sets",
+  "main": "oc-local-extra-sets-list.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "oc-extra-sets-list": "git://github.com/oc-elements/oc-extra-sets-list#1.x",
+    "oc-local-product-extras-api": "git://github.com/oc-elements/oc-local-product-extras-api#1.x"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  }
+}
