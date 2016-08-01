@@ -26,6 +26,8 @@ Element displaying a list of local extra sets
             page-size="[[ _pageSize ]]"
             current-page="[[ _currentPage ]]"
             on-async-page-request="_onPageRequest"
+            on-enable-extra-set="_onEnableExtraSet"
+            on-disable-extra-set="_onDisableExtraSet"
     ></oc-extra-sets-list>
   </template>
 
@@ -68,6 +70,16 @@ Element displaying a list of local extra sets
                 }.bind(this))
                 .catch(this.fire.bind(this, 'extra-set-error', 'Failed to load extra sets'))
                 .finally(this.set.bind(this, 'loading', false));
+      },
+
+      _onEnableExtraSet: function(e) {
+        this.$.extrasApi.enableExtraSet(e.detail.id)
+                .catch(this.fire.bind(this, 'extra-set-error', 'Failed to enable extra set'));
+      },
+
+      _onDisableExtraSet: function(e) {
+        this.$.extrasApi.disableExtraSet(e.detail.id)
+                .catch(this.fire.bind(this, 'extra-set-error', 'Failed to disable extra set'));
       }
 
     });
