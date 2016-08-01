@@ -1,12 +1,13 @@
 <link rel="import" href="../polymer/polymer.html">
 
-<link rel="import" href="../oc-local-product-extras-api/oc-local-product-extras-api.html">
 <link rel="import" href="../oc-extra-sets-list/oc-extra-sets-list.html">
+<link rel="import" href="../oc-local-product-extras-api/oc-local-product-extras-api.html">
+
 <!--
 `oc-local-extra-sets-list`
 Element displaying a list of local extra sets
 
-@demo demo/index.html 
+@demo demo/index.html
 -->
 
 <dom-module id="oc-local-extra-sets-list">
@@ -19,7 +20,13 @@ Element displaying a list of local extra sets
 
   <template>
     <oc-local-product-extras-api id="extrasApi" ></oc-local-product-extras-api>
-    <oc-extra-sets-list></oc-extra-sets-list>
+    <oc-extra-sets-list
+            items="[[ _items ]]"
+            total-items="[[ _totalItems ]]"
+            page-size="[[ _pageSize ]]"
+            current-page="[[ _currentPage ]]"
+            on-async-page-request="_onPageRequest"
+    ></oc-extra-sets-list>
   </template>
 
   <script>
@@ -28,11 +35,40 @@ Element displaying a list of local extra sets
       is: 'oc-local-extra-sets-list',
 
       properties: {
-        prop1: {
-          type: String,
-          value: 'oc-local-extra-sets-list',
-        },
+        organisationId: Number,
+        loading: {
+          type: Boolean,
+          value: false,
+          notify: true
+        }
       },
+
+      observers: [
+        'refresh(organisationId)'
+      ],
+
+      refresh: function() {
+        if (this.organisationId) {
+          this.loading = true;
+          this._getExtraSets(1, 10);
+        }
+      },
+
+      _onPageRequest: function(event) {
+        this._getExtraSets(event.detail.page, event.detail.range);
+      },
+
+      _getExtraSets(page, pageSize) {
+        this.$.extrasApi.getExtraSets(page, pageSize)
+                .then(function(request) {
+                  this._items = request.response.results;
+                  this._totalItems = request.response.count;
+                  this._currentPage = page;
+                  this._pageSize = pageSize;
+                }.bind(this))
+                .catch(this.fire.bind(this, 'extra-set-error', 'Failed to load extra sets'))
+                .finally(this.set.bind(this, 'loading', false));
+      }
 
     });
   </script>
